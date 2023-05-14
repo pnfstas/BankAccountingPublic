@@ -1,0 +1,365 @@
+nav.main-menu
+{
+    height: 65px;
+}
+
+    nav.main-menu > ul
+    {
+        display: flex;
+        flex-direction: row;
+        box-sizing: border-box;
+        height: 65px;
+        padding: 0px;
+        margin: 0px;
+        margin-block-start: 0px;
+        margin-block-end: 0px;
+        list-style: none;
+    }
+
+        nav.main-menu > ul img
+        {
+            grid-column: 1;
+            width: 90%;
+            height: 90%;
+            margin: 0px;
+            padding: 0px;
+            object-fit: contain;
+        }
+
+        nav.main-menu > ul :not(li)
+        {
+            place-self: center stretch;
+        }
+
+        nav.main-menu > ul > li
+        {
+            float: left;
+            box-sizing: content-box;
+            width: 150px;
+            margin-right: 10px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+            background-color: ButtonFace;
+        }
+
+            nav.main-menu > ul > li > div
+            {
+                flex-shrink: 0;
+                box-sizing: border-box;
+                width: 150px;
+                height: 65px;
+                border: 10px outset lightgreen;
+                margin: 0px;
+                padding: 0px;
+                display: grid;
+                grid-template-columns: 30% 70%;
+                border-radius: 10%;
+            }
+
+                nav.main-menu > ul > li > div:has(:hover)
+                {
+                    border: 10px outset lightseagreen;
+                }
+
+                nav.main-menu > ul > li > div > span
+                {
+                    grid-column: 1;
+                    display: flex;
+                    text-align: center;
+                    font-family: 'Segoe MDL2 Assets';
+                    font-size: 30px;
+                }
+
+                nav.main-menu > ul > li > div > a
+                {
+                    grid-column: 2;
+                    display: flex;
+                    text-align: center;
+                }
+
+    nav.main-menu ul.main-submenu-list
+    {
+        display: none;
+        position: relative;
+        left: 25px;
+        top: 0px;
+        box-sizing: content-box;
+        width: 200px;
+        height: auto;
+        border: 1px solid black;
+        padding: 0px;
+        margin: 0px;
+        margin-block-start: 0px;
+        margin-block-end: 0px;
+        list-style: none;
+    }
+
+    nav.main-menu ul.main-subsubmenu-list
+    {
+        display: none;
+        position: relative;
+        left: 200px;
+        top: -28px;
+        box-sizing: content-box;
+        width: 200px;
+        height: auto;
+        border: 1px solid black;
+        padding: 0px;
+        margin-block-start: 0px;
+        margin-block-end: 0px;
+        list-style: none;
+    }
+
+        nav.main-menu ul.main-subsubmenu-list > li
+        {
+            float: left;
+            box-sizing: border-box;
+            width: 200px;
+            height: 30px;
+            display: grid;
+            grid-template-columns: 15% 75% 10%;
+            background-color: ButtonFace;
+            font-size: 16px;
+            font-weight: normal;
+            color: black;
+        }
+
+            nav.main-menu ul.main-subsubmenu-list > li:has(:hover)
+            {
+                background-color: lightgray;
+            }
+
+            nav.main-menu ul.main-subsubmenu-list > li > a
+            {
+                grid-column: 2;
+                padding-left: 10px;
+                display: flex;
+                text-align: left;
+            }
+
+            nav.main-menu ul.main-subsubmenu-list > li > span
+            {
+                grid-column: 3;
+                display: flex;
+                justify-self: end;
+                font-family: 'Segoe MDL2 Assets';
+                font-size: 20px;
+            }
+
+    nav.main-menu li:has(:hover) > ul.main-submenu-list, nav.main-menu li:has(:hover) > ul.main-subsubmenu-list
+    {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+    }
+
+form.account-form
+{
+    float: left;
+    box-sizing: border-box;
+    width: 600px;
+    height: 400px;
+    margin: 0px;
+    padding: 10px;
+    border: solid 2px black;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    background-color: ButtonFace;
+    text-align: left;
+    font-size: 20px;
+    font-weight: normal;
+    color: black;
+}
+
+    form.account-form.login
+    {
+        height: 400px;
+    }
+
+    form.account-form.register
+    {
+        height: 700px;
+    }
+
+    form.account-form fieldset.login-type-fieldset
+    {
+        flex: initial;
+        box-sizing: border-box;
+        margin: 0px 0px 15px 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    form.account-form div.login-type-div
+    {
+        flex: initial;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    form.account-form label.login-type-label, form.account-form.login label.rememberme-label
+    {
+        flex: initial;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    form.account-form input.login-type-radio
+    {
+        margin-right: 7px;
+        justify-self: center;
+    }
+
+    form.account-form .login-input-parent
+    {
+        display: none;
+    }
+
+    form.account-form:has( input#login-by-username-radio:checked) label#username-label,
+    form.account-form:has( input#login-by-email-radio:checked) div#email-div,
+    form.account-form:has( input#login-by-phone-radio:checked) div#phone-div
+    {
+        flex: initial;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        /*justify-items: stretch;*/
+        justify-content: normal;
+    }
+
+    form.account-form div.user-property-div
+    {
+        flex: initial;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        /*justify-items: stretch;*/
+        justify-content: normal;
+    }
+
+    form.account-form label.user-property-label
+    {
+        flex: initial;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        /*justify-items: stretch;*/
+        justify-content: normal;
+    }
+
+    form.account-form div.user-property-div > div
+    {
+        flex: initial;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+    }
+
+    form.account-form.register span.confirm-state-span
+    {
+        flex: initial;
+        box-sizing: border-box;
+        font-weight: bold;
+        color: red;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    form.account-form input.user-property-input
+    {
+        flex: auto;
+        height: 25px;
+        margin-top: 5px;
+        justify-self: stretch;
+    }
+
+    form.account-form.login input.rememberme-checkbox
+    {
+        flex: initial;
+        box-sizing: border-box;
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+    }
+
+    form.account-form input.submit-button
+    {
+        flex: initial;
+        place-self: center center;
+        box-sizing: border-box;
+        width: 50%;
+        height: 65px;
+        margin-top: 10px;
+        padding: 0px;
+        border: 10px outset lightgray;
+        border-radius: 10%;
+        background-color: lightgreen;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+        form.account-form input.submit-button:hover:enabled     /*:not(:disabled):not([disabled])*/
+        {
+            border-color: darkgray;
+        }
+
+    form.account-form.login a.register-anchor
+    {
+        flex: initial;
+        height: 25px;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: normal;
+    }
+
+    form.account-form .field-validation-error
+    {
+        color: red;
+        font-weight: bold;
+    }
+
+    form.account-form input:invalid
+    {
+        border-color: red;
+        color: red;
+    }
+
+    form.account-form.submitted input, form.account-form input:disabled
+    {
+        opacity: 0.5;
+    }
+
+.ui-confirmdialog
+{
+    position: fixed;
+    background-color: ButtonFace;
+    border: solid 2px black;
+}
+
+.ui-confirmdialog-titlebar-close
+{
+    display: none;
+}
+
+.ui-confirmdialog-buttonpane
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

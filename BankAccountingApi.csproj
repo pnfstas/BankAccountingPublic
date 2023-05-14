@@ -1,0 +1,101 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <Nullable>annotations</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>False</UseWindowsForms>
+    <UseWPF>True</UseWPF>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <DefineConstants>$(DefineConstants);TRACE;DEBUG;NET;NET7_0;NETCOREAPP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>False</Optimize>
+    <WarningLevel>1</WarningLevel>
+    <DefineConstants>$(DefineConstants);TRACE;RELEASE;NET;NET7_0;NETCOREAPP</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Backup_2023\**" />
+    <Compile Remove="wwwroot\GeeksforGeeks Login_files\**" />
+    <Compile Remove="wwwroot\misc\**" />
+    <Compile Remove="wwwroot\СберБанк Login_files\**" />
+    <Compile Remove="wwwroot\СберБанк Онлайн_files1\**" />
+    <Compile Remove="wwwroot\СберБанк Онлайн_files\**" />
+    <Content Remove="Backup_2023\**" />
+    <Content Remove="wwwroot\GeeksforGeeks Login_files\**" />
+    <Content Remove="wwwroot\misc\**" />
+    <Content Remove="wwwroot\СберБанк Login_files\**" />
+    <Content Remove="wwwroot\СберБанк Онлайн_files1\**" />
+    <Content Remove="wwwroot\СберБанк Онлайн_files\**" />
+    <EmbeddedResource Remove="Backup_2023\**" />
+    <EmbeddedResource Remove="wwwroot\GeeksforGeeks Login_files\**" />
+    <EmbeddedResource Remove="wwwroot\misc\**" />
+    <EmbeddedResource Remove="wwwroot\СберБанк Login_files\**" />
+    <EmbeddedResource Remove="wwwroot\СберБанк Онлайн_files1\**" />
+    <EmbeddedResource Remove="wwwroot\СберБанк Онлайн_files\**" />
+    <None Remove="Backup_2023\**" />
+    <None Remove="wwwroot\GeeksforGeeks Login_files\**" />
+    <None Remove="wwwroot\misc\**" />
+    <None Remove="wwwroot\СберБанк Login_files\**" />
+    <None Remove="wwwroot\СберБанк Онлайн_files1\**" />
+    <None Remove="wwwroot\СберБанк Онлайн_files\**" />
+    <Page Remove="Backup_2023\**" />
+    <Page Remove="wwwroot\GeeksforGeeks Login_files\**" />
+    <Page Remove="wwwroot\misc\**" />
+    <Page Remove="wwwroot\СберБанк Login_files\**" />
+    <Page Remove="wwwroot\СберБанк Онлайн_files\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\GeeksforGeeks Login.html" />
+    <Content Remove="wwwroot\СберБанк Login.html" />
+    <Content Remove="wwwroot\СберБанк Онлайн.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".dockerignore" />
+    <None Remove="Dockerfile" />
+    <None Remove="Views\Shared\Layout.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="jQuery" Version="3.6.3" />
+    <PackageReference Include="MailKit" Version="3.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.14" />
+    <PackageReference Include="Selenium.Support" Version="4.8.2" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.8.2" />
+    <PackageReference Include="Selenium.WebDriver.MicrosoftDriver" Version="17.17134.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Views\Home\DisplayTemplates\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="msedgedriver.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+﻿<script>
+	alert("UserAccountSubmittedPartial is executing");
+	if(!$(".account-form").hasClass("submitted"))
+	{
+		$(".account-form").addClass("submitted");
+	}
+	$(".account-form input").each(function(index)
+	{
+		$(this).prop("disabled", true);
+	});
+</script>

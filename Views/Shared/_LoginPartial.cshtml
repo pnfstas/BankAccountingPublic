@@ -1,0 +1,10 @@
+﻿@inject UserManager<BankApiUser> userManager
+@inject SignInManager<BankApiUser> signInManager
+
+@if(!signInManager.IsSignedIn(User))
+{
+    Context.Response.Redirect("UserAccount/Login");
+}
+else
+{
+}

@@ -1,0 +1,57 @@
+[*.cs]
+
+# CSharp formatting rules:
+
+# CA2200: Повторно порождайте исключения для сохранения сведений стека
+dotnet_diagnostic.CA2200.severity = none
+
+# CA5359: Do Not Disable Certificate Validation
+dotnet_diagnostic.CA5359.severity = none
+
+[*.{cs,cshtml}]
+csharp_space_after_keywords_in_control_flow_statements = false
+
+# CS0628: Новый защищенный элемент объявлен в запечатанном типе
+dotnet_diagnostic.CS0628.severity = none
+
+# IDE0001: Упрощение имен
+dotnet_diagnostic.IDE0001.severity = none
+
+# IDE0002: Упрощение доступа для элементов
+dotnet_diagnostic.IDE0002.severity = none
+
+# IDE0003: Удалить квалификацию
+dotnet_diagnostic.IDE0003.severity = none
+
+# Default severity for analyzer diagnostics with category 'Style'
+dotnet_analyzer_diagnostic.category-Style.severity = none
+
+# IDE0051: Удалите неиспользуемые закрытые члены
+dotnet_diagnostic.IDE0051.severity = none
+
+# CS0219: Переменная назначена, но ее значение не используется
+dotnet_diagnostic.CS0219.severity = none
+
+# IDE0052: Удалить непрочитанные закрытые члены
+dotnet_diagnostic.IDE0052.severity = none
+
+# CS8625: Литерал, равный NULL, не может быть преобразован в ссылочный тип, не допускающий значение NULL.
+dotnet_diagnostic.CS8625.severity = none
+
+# CA1822: Пометьте члены как статические
+dotnet_diagnostic.CA1822.severity = none
+
+# SYSLIB1045: Преобразовать в "GeneratedRegexAttribute".
+dotnet_diagnostic.SYSLIB1045.severity = none
+
+[*.{cs,vb}]
+dotnet_code_quality_unused_parameters=all:silent
+
+[*.{cs,vb}]
+dotnet_analyzer_diagnostic.category-Globalization.severity = none
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = suggestion
+
+# Default severity for analyzer diagnostics with category 'Performance'
+dotnet_analyzer_diagnostic.category-Performance.severity = none

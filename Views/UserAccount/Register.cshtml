@@ -1,0 +1,123 @@
+﻿@model RegisterViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Bank Accounting API Login</title>
+        <link rel="stylesheet" type="text/css" href="~/css/Syte.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+    </head>
+    <body data-error-messages="@(JsonConvert.SerializeObject(RegisterViewModel.GetErrorMessages()))"
+        data-registration-lockout-interval="@(Startup.UserOptions.RegistrationLockoutInterval)">
+        <form class="account-form register" action="javascript:void(0);" method="post" onsubmit="register()">
+            <fieldset class="login-type-fieldset">
+                <legend>Login by</legend>
+                <div class="login-type-div">
+                    <label class="login-type-label">
+                        <input class="login-type-radio" id="login-by-username-radio" name="LoginType" type="radio" value="@LoginType.LoginByUserName.ToString()" />
+                        user name
+                    </label>
+                    <label class="login-type-label">
+                        <input class="login-type-radio" id="login-by-email-radio" name="LoginType" type="radio" value="@LoginType.LoginByEmail.ToString()" />
+                        e-mail
+                    </label>
+                    <label class="login-type-label">
+                        <input class="login-type-radio" id="login-by-phone-radio" name="LoginType" type="radio" value="@LoginType.LoginByPhoneNumber.ToString()" />
+                        phone number
+                    </label>
+                </div>
+            </fieldset>
+            <label class="user-property-label login-input-parent" id="username-label">
+                User name:
+                <input class="user-property-input login-input" id="UserName" name="UserName" type="text" data-inputmask-regex="[A-Za-z][A-Za-z0-9-\._\@@\+]{7,14}"
+                       pattern="[A-Za-z][A-Za-z0-9-\._\@@\+]{7,14}" value="@Model.UserName" />
+            </label>
+            <div class="user-property-div login-input-parent" id="email-div">
+                <div class="login-confirm-div">
+                    E-Mail:
+                    <span class="confirm-state-span" id="email-confirm-state-span">@(Model.EmailConfirmationState.GetValueDescription())</span>
+                </div>
+                <input class="user-property-input login-input" id="Email" name="Email" type="email" data-inputmask-alias="email" value="@Model.Email" />
+            </div>
+            <div class="user-property-div login-input-parent" id="phone-div">
+                <div class="login-confirm-div">
+                    Phone number:
+                    <span class="confirm-state-span" id="phone-confirm-state-span">@(Model.PhoneConfirmationState.GetValueDescription())</span>
+                </div>
+                <input class="user-property-input login-input" id="DislayedPhoneNumber" name="DislayedPhoneNumber" type="tel"
+                    data-inputmask-regex="(\+[0-9]\([0-9][0-9][0-9]\) )*[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]" value="@Model.DislayedPhoneNumber" />
+            </div>
+            <label class="user-property-label">
+                Password:
+                <input class="user-property-input" type="password" id="Password" name="Password" value="@(Model.Submitted ? Model.Password : "")" required />
+            </label>
+            <label class="user-property-label">
+                Confirm password:
+                <input class="user-property-input" type="password" id="PasswordConfirmation" name="PasswordConfirmation" value="@(Model.Submitted ? Model.PasswordConfirmation : "")" required />
+            </label>
+            <label class="user-property-label">
+                First Name:
+                <input class="user-property-input" type="text" id="FirstName" name="FirstName" value="@Model.FirstName" required />
+            </label>
+            <label class="user-property-label">
+                Last Name:
+                <input class="user-property-input" type="text" id="LastName" name="LastName" value="@Model.LastName" />
+            </label>
+            <label class="user-property-label">
+                Country:
+                <input class="user-property-input" type="text" id="Country" name="Country" value="@Model.Country" />
+            </label>
+            <label class="user-property-label">
+                City:
+                <input class="user-property-input" type="text" id="City" name="City" value="@Model.City" />
+            </label>
+            <input class="submit-button" type="submit" value="Continue" />
+        </form>
+        <div id="confirm-email-dialog" hidden>
+            <div class="ui-confirm-dialog-default-content">
+                <p>
+                    We send you confirmation link mail.
+                </p>
+                <p>
+                    Check you inbox and follow confirmation link.
+                </p>
+            </div>
+            <div class="ui-confirm-dialog-error-content" hidden>
+                <p>
+                    The timeout has expired. We have not received a confirmation email from you.
+                </p>
+                <p>
+                    Try sending yourself the confirmation link again.
+                </p>
+            </div>
+        </div>
+        <div id="confirm-phone-dialog" hidden>
+            <div class="ui-confirm-dialog-default-content">
+                <p>
+                    Enter here the verification code
+                </p>
+                <p>
+                    that will be sent to your phone.
+                </p>
+            </div>
+            <div class="ui-confirm-dialog-error-content" hidden>
+                <p>
+                    You entered wrong code.
+                </p>
+                <p>
+                    Try again or generete new code.
+                </p>
+            </div>
+            <input class="confirm-code-input" type="text" id="confirm-code-input" name="ConfirmPhoneVerificationCode" />
+        </div>
+        <a id="upload-file-anchor" hidden></a>
+        <partial name="UserAccountScriptsPartial" />
+        <script src="~/lib/jqueryui/jquery-ui.js"></script>
+        <script src="~/src/register.js" asp-append-version="true"></script>
+    </body>
+</html>

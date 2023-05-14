@@ -1,0 +1,120 @@
+﻿@inject UserManager<BankApiUser> userManager
+
+@model HomeViewModel
+
+@{
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Bank Accounting API | @ViewBag.Title</title>
+        <link rel="stylesheet" type="text/css" href="css/Syte.css" />
+    </head>
+
+    <body>
+        @if(!string.Equals(Context.Request.RouteValues["controller"], "UserAccount"))
+        {
+            <nav id="main-menu" class="main-menu">
+                @*@Html.Raw(HomeViewModel.RenderMainMenuContent((await userManager.FindByNameAsync(User.Identity.Name))?.FullName))*@
+                <ul id="main-menu-list">
+                    <li>
+                        <div>
+                            <span>&#xE825</span>
+                            <a href="#">Account</a>
+                        </div>
+                        <ul class="main-submenu-list">
+                            <li>
+                                <img src="images/cash_deposit.png" />
+                                <a href="BankAccount/СashDeposit">Сash deposit</a>
+                            </li>
+                            <li>
+                                <img src="images/cash_withdrawals.png" />
+                                <a href="BankAccount/СashWithdrawals">Cash withdrawals</a>
+                            </li>
+                            <li>
+                                <img src="images/reports.png" />
+                                <a href="#">Reports</a>
+                                <span>&#xE937</span>
+                                <ul class="main-subsubmenu-list">
+                                    <li>
+                                        <img src="images/balance.png" />
+                                        <a href="BankAccount/Balance">Balance</a>
+                                    </li>
+                                    <li>
+                                        <img src="images/account_history.png" />
+                                        <a href="BankAccount/OperationsHistory">Operations history</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div>
+                            <span>&#xE8C7</span>
+                            <a href="#">Pay cards</a>
+                        </div>
+                        <ul class="main-submenu-list">
+                            <li>
+                                <img src="images/paycard_open.png" />
+                                <a href="PayCards/Open">Open</a>
+                            </li>
+                            <li>
+                                <img src="images/paycard_block.png" />
+                                <a href="PayCards/Block">Block</a>
+                            </li>
+                            <li>
+                                <img src="images/paycard_block.png" />
+                                <a href="PayCards/Close">Close</a>
+                            </li>
+                            <li>
+                                <img src="images/reports.png" />
+                                <a href="#">Reports</a>
+                                <span>&#xE937</span>
+                                <ul class="main-subsubmenu-list">
+                                    <li>
+                                        <img src="images/balance.png" />
+                                        <a href="PayCards/Balance">Balance</a>
+                                    </li>
+                                    <li>
+                                        <img src="images/paycard_history.png" />
+                                        <a href="PayCards/OperationsHistory">Operations history</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div>
+                            <span>&#xE115</span>
+                            <a href="Home/Settings">Settings</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span>&#xE13D</span>
+                            <a href="#">@((await userManager.FindByNameAsync(User?.Identity?.Name))?.FullName)</a>
+                        </div>
+                        <ul class="main-submenu-list">
+                            <li>
+                                <a href="UserAccount/EditProfile">Edit profile</a>
+                            </li>
+                            <li>
+                                <a href="UserAccount/LogOut">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        }
+        <h3>
+            @ViewBag.Title
+        </h3>
+        <div>
+            @RenderBody()
+        </div>
+        <footer>@RenderSection("Footer", false)</footer>
+        @RenderSection("Scripts", false);
+    </body>
+</html>

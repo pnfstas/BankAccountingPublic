@@ -1,0 +1,64 @@
+﻿@model LoginViewModel
+
+@{
+    Layout = null;
+}
+
+@section Scripts
+{
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Bank Accounting API Login</title>
+        <link rel="stylesheet" type="text/css" href="~/css/Syte.css" />
+    </head>
+    <body data-error-messages="@(JsonConvert.SerializeObject(LoginViewModel.GetErrorMessages()))">
+        <form class="account-form login" method="post" asp-route="UserAccount/Login">
+            <fieldset class="login-type-fieldset">
+                <legend>Login by</legend>
+                <div class="login-type-div">
+                    <label class="login-type-label">
+                        <input class="login-type-radio" id="login-by-username-radio" name="LoginType" type="radio" value="@LoginType.LoginByUserName.ToString()" />
+                        user name
+                    </label>
+                    <label class="login-type-label">
+                        <input class="login-type-radio" id="login-by-email-radio" name="LoginType" type="radio" value="@LoginType.LoginByEmail.ToString()" />
+                        e-mail
+                    </label>
+                    <label class="login-type-label">
+                        <input class="login-type-radio" id="login-by-phone-radio" name="LoginType" type="radio" value="@LoginType.LoginByPhoneNumber.ToString()" />
+                        phone number
+                    </label>
+                </div>
+            </fieldset>
+            <label class="user-property-label login-input-parent" id="username-label">
+                User name:
+                <input class="user-property-input login-input" id="UserName" name="UserName" type="text" data-inputmask-regex="[A-Za-z][A-Za-z0-9-\._\@@\+]{7,14}"
+                       pattern="[A-Za-z][A-Za-z0-9-\._\@@\+]{7,14}" value="@Model.UserName" />
+            </label>
+            <div class="user-property-div login-input-parent" id="email-div">
+                E-Mail:
+                <input class="user-property-input login-input" id="Email" name="Email" type="email" data-inputmask-alias="email" value="@Model.Email" />
+            </div>
+            <div class="user-property-div login-input-parent" id="phone-div">
+                Phone number:
+                <input class="user-property-input login-input" id="DislayedPhoneNumber" name="DislayedPhoneNumber" type="tel"
+                       data-inputmask-regex="(\+[0-9]\([0-9][0-9][0-9]\) )*[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]" value="@Model.DislayedPhoneNumber" />
+            </div>
+            <label class="user-property-label">
+                Password:
+                <input class="user-property-input" type="password" id="Password" name="Password" value="@(Model.Submitted ? Model.Password : "")" required />
+            </label>
+            <label class="rememberme-label">
+                <input class="rememberme-checkbox" type="checkbox" id="RememberMe" name="RememberMe" value="@Model.RememberMe" />
+                Remember Me
+            </label>
+            <input class="submit-button" type="submit" value="Sign In" />
+            <a class="register-anchor" asp-action="Register" asp-controller="UserAccount">Register new account</a>
+        </form>
+        <partial name="UserAccountScriptsPartial" />
+    </body>
+</html>
