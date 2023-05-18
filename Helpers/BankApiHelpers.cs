@@ -214,7 +214,7 @@ namespace BankAccountingApi.Helpers
                         BankApiUser user = await userManager.FindByEmailAsync(model.Email);
                         if(user != null)
                         {
-                            model.EmailVerificationCode = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                            model.EmailVerificationCode = await userManager.GenerateTwoFactorTokenAsync(user, Startup.Startup.TwoFactorTokenProviderName);
                             if(!string.IsNullOrWhiteSpace(model.EmailVerificationCode))
                             {
                                 string strQuery = model.ToQueryString();

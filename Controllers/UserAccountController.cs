@@ -125,6 +125,14 @@ namespace BankAccountingApi.Controllers
                     case LoginType.LoginByEmail:
                         await EmailHelper.SendConfirmationLinkMail(HttpContext, model, UserManager);
                         actionResult = RedirectToAction("Register", model);
+                        /*
+                        model.EmailVerificationCode = await UserManager.GenerateTwoFactorTokenAsync(newUser, Startup.Startup.TwoFactorTokenProviderName);
+                        if(!string.IsNullOrWhiteSpace(model.EmailVerificationCode))
+                        {
+                            model.EmailConfirmationState = ConfirmationState.WaitForConfirmation;
+                            actionResult = RedirectToAction("Register", model);
+                        }
+                        */
                         break;
                     case LoginType.LoginByPhoneNumber:
                         await SmsHelper.SendVerificationCode(model);
@@ -135,14 +143,71 @@ namespace BankAccountingApi.Controllers
             }
             return actionResult;
         }
-        [HttpGet]
-        public IActionResult Login(object? source = null)
+        [HttpPost]
+        public async Task<IActionResult> SendConfirmationLinkMail([FromBody] RegisterViewModel model)
         {
-            LoginViewModel model = new LoginViewModel();
-            if(source is RegisterViewModel || source is BankApiUser)
+            await EmailHelper.SendConfirmationLinkMail(HttpContext, model, UserManager);
+            return RedirectToAction("Register", model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetEmailConfirmationState([FromBody] RegisterViewModel model)
+        {
+            bool isConfirmed = false;
+            if(model != null && model.LoginType == LoginType.LoginByEmail)
             {
-                model.CopyPropertiesFrom(source);
+                BankApiUser user = await UserManager.FindByEmailAsync(model.Email);
+                if(user != null)
+                {
+                    isConfirmed = user.EmailConfirmed;
+                }
             }
+            return new JsonResult(new
+            {
+                confirmed = isConfirmed
+            });
+        }
+        [HttpGet]
+        public async Task<IActionResult> CompleteConfirmEmail(RegisterViewModel model)
+        {
+            string action = "Register";
+            if(!string.IsNullOrWhiteSpace(model?.EmailVerificationCode))
+            {
+                BankApiUser user = await UserManager.FindByEmailAsync(model?.Email);
+                if(user != null && await UserManager.VerifyTwoFactorTokenAsync(user, Startup.Startup.TwoFactorTokenProviderName, model.EmailVerificationCode))
+                {
+                    model.EmailConfirmationState = ConfirmationState.Complete;
+                    model.Submitted = false;
+                    action = "Login";
+                }
+            }
+            if(model == null)
+            {
+                model = new RegisterViewModel();
+            }
+            Dictionary<string, string> parameters = new Dictionary<string, string>()
+            {
+                {"url", $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/UserAccount/{action}/?{model.ToQueryString()}" },
+                {"target", "BankApi.Register" }
+            };
+            return PartialView("RedirectPartial", parameters);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendNewVerificationCode([FromBody] RegisterViewModel model)
+        {
+            await SmsHelper.SendVerificationCode(model);
+            return RedirectToAction("Register", model);
+        }
+        [HttpPost]
+        public IActionResult CompleteConfirmPhone([FromBody] RegisterViewModel model)
+        {
+            model.PhoneConfirmationState = ConfirmationState.Complete;
+            BankApiUser user = UserManager.FindByPhoneNumber(model.PhoneNumber);
+            return RedirectToAction("Login", user);
+        }
+        [HttpGet]
+        public IActionResult Login(RegisterViewModel? regModel = null)
+        {
+            LoginViewModel model = new LoginViewModel(regModel);
             return View(model);
         }
         [HttpPost]
@@ -197,56 +262,6 @@ namespace BankAccountingApi.Controllers
                 }
             }
             return actionResult;
-        }
-        [HttpPost]
-        public async Task<IActionResult> SendConfirmationLinkMail([FromBody]RegisterViewModel model)
-        {
-            await EmailHelper.SendConfirmationLinkMail(HttpContext, model, UserManager);
-            return RedirectToAction("Register", model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> GetEmailConfirmationState([FromBody]RegisterViewModel model)
-        {
-            bool isConfirmed = false;
-            if(model != null && model.LoginType == LoginType.LoginByEmail)
-            {
-                BankApiUser user = await UserManager.FindByEmailAsync(model.Email);
-                if(user != null)
-                {
-                    isConfirmed = user.EmailConfirmed;
-                }
-            }
-            return new JsonResult(new
-            {
-                confirmed = isConfirmed
-            });
-        }
-        [HttpGet]
-        public async Task<IActionResult> CompleteConfirmEmail([FromQuery]RegisterViewModel model)
-        {
-            IActionResult actionResult = RedirectToAction("Register", model ?? new RegisterViewModel());
-            if(!string.IsNullOrWhiteSpace(model?.EmailVerificationCode))
-            {
-                BankApiUser user = await UserManager.FindByEmailAsync(model?.Email);
-                if(user != null && await UserManager.ConfirmEmailAsync(user, model.EmailVerificationCode) == IdentityResult.Success)
-                {
-                    actionResult = RedirectToAction("Login", model);
-                }
-            }
-            return actionResult;
-        }
-        [HttpPost]
-        public async Task<IActionResult> SendNewVerificationCode([FromBody]RegisterViewModel model)
-        {
-            await SmsHelper.SendVerificationCode(model);
-            return RedirectToAction("Register", model);
-        }
-        [HttpPost]
-         public IActionResult CompleteConfirmPhone([FromBody]RegisterViewModel model)
-        {
-            model.PhoneConfirmationState = ConfirmationState.Complete;
-            BankApiUser user = UserManager.FindByPhoneNumber(model.PhoneNumber);
-            return RedirectToAction("Login", user);
         }
         [HttpGet]
         public IActionResult AccessDenied()

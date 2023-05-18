@@ -23,30 +23,40 @@
 
   <ItemGroup>
     <Compile Remove="Backup_2023\**" />
+    <Compile Remove="Views\Home\DisplayTemplates\**" />
+    <Compile Remove="Views\Shared\DisplayTemplates\**" />
     <Compile Remove="wwwroot\GeeksforGeeks Login_files\**" />
     <Compile Remove="wwwroot\misc\**" />
     <Compile Remove="wwwroot\СберБанк Login_files\**" />
     <Compile Remove="wwwroot\СберБанк Онлайн_files1\**" />
     <Compile Remove="wwwroot\СберБанк Онлайн_files\**" />
     <Content Remove="Backup_2023\**" />
+    <Content Remove="Views\Home\DisplayTemplates\**" />
+    <Content Remove="Views\Shared\DisplayTemplates\**" />
     <Content Remove="wwwroot\GeeksforGeeks Login_files\**" />
     <Content Remove="wwwroot\misc\**" />
     <Content Remove="wwwroot\СберБанк Login_files\**" />
     <Content Remove="wwwroot\СберБанк Онлайн_files1\**" />
     <Content Remove="wwwroot\СберБанк Онлайн_files\**" />
     <EmbeddedResource Remove="Backup_2023\**" />
+    <EmbeddedResource Remove="Views\Home\DisplayTemplates\**" />
+    <EmbeddedResource Remove="Views\Shared\DisplayTemplates\**" />
     <EmbeddedResource Remove="wwwroot\GeeksforGeeks Login_files\**" />
     <EmbeddedResource Remove="wwwroot\misc\**" />
     <EmbeddedResource Remove="wwwroot\СберБанк Login_files\**" />
     <EmbeddedResource Remove="wwwroot\СберБанк Онлайн_files1\**" />
     <EmbeddedResource Remove="wwwroot\СберБанк Онлайн_files\**" />
     <None Remove="Backup_2023\**" />
+    <None Remove="Views\Home\DisplayTemplates\**" />
+    <None Remove="Views\Shared\DisplayTemplates\**" />
     <None Remove="wwwroot\GeeksforGeeks Login_files\**" />
     <None Remove="wwwroot\misc\**" />
     <None Remove="wwwroot\СберБанк Login_files\**" />
     <None Remove="wwwroot\СберБанк Онлайн_files1\**" />
     <None Remove="wwwroot\СберБанк Онлайн_files\**" />
     <Page Remove="Backup_2023\**" />
+    <Page Remove="Views\Home\DisplayTemplates\**" />
+    <Page Remove="Views\Shared\DisplayTemplates\**" />
     <Page Remove="wwwroot\GeeksforGeeks Login_files\**" />
     <Page Remove="wwwroot\misc\**" />
     <Page Remove="wwwroot\СберБанк Login_files\**" />
@@ -87,8 +97,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Home\DisplayTemplates\" />
-    <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 

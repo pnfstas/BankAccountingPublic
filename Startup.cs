@@ -1,5 +1,6 @@
 ﻿using BankAccountingApi.Data;
 using BankAccountingApi.Models;
+using BankAccountingApi.Services;
 using MailKit.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ namespace BankAccountingApi.Startup
 {
     public class Startup
     {
+        public static string TwoFactorTokenProviderName = "TwoFactorTokenProvider";
         public static IConfiguration AppConfiguration { get; set; }
         public static IWebHostEnvironment WebHostEnvironment { get; set; }
         public static BankApiUserOptions UserOptions { get; set; }
@@ -26,8 +28,10 @@ namespace BankAccountingApi.Startup
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(AppConfiguration["ConnectionStrings:DefaultConnection"]));
             services.AddIdentity<BankApiUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddTokenProvider<BankApiUserTwoFactorTokenProvider>(TwoFactorTokenProviderName);
             services.AddControllersWithViews();
+            services.AddSingleton<ITokenStoreService, TokenStoreService>();
             services.Configure<IdentityOptions>(options =>
             {
                 // sign-in

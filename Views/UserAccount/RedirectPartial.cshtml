@@ -1,0 +1,20 @@
+﻿@model Dictionary<string, string>
+
+<script>
+    try
+    {
+        window.close();
+        window.open(@Model["url"], @Model["target"]);
+    }
+    catch(e)
+    {
+        console.error(e);
+        throw e;
+    }
+</script>
+@*
+<script src="~/src/user-account-redirect.js" asp-append-version="true"></script>
+<script>
+    redirect(@Model["url"], @Model["target"]);
+</script>
+*@

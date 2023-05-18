@@ -148,7 +148,13 @@
 					/*
 					if(options.dialogType === ConfirmDialogTypes.ConfirmEmail)
 					{
-						this._checkTimeoutID = window.setTimeout(function() { that._checkTimeoutExpiredCallback(); }, 10 * 1000);
+						//this._checkTimeoutID = window.setTimeout(function() { that._checkTimeoutExpiredCallback(); }, 10 * 1000);
+						//this._mainTimeoutID = window.setTimeout(function() { that.close(); }, 10 * 1000);
+						this._mainTimeoutID = window.setTimeout(function()
+						{
+							window.location.href = `${window.location.origin}/UserAccount/CompleteConfirmEmail?${modelToQueryString(that.options.model)}`;
+							return false;
+						}, 10 * 1000);
 					}
 					*/
 				}

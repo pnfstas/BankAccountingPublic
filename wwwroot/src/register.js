@@ -57,6 +57,7 @@ $(async function()
 {
 	try
 	{
+		window.name = "BankApi.Register";
 		//$(".account-form.register").on("submit", register);
 		if(model?.Submitted === true && model.hasOwnProperty("EmailConfirmationState") && model.hasOwnProperty("PhoneConfirmationState"))
 		{
