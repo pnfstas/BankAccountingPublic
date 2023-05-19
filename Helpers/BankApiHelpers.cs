@@ -318,7 +318,7 @@ namespace BankAccountingApi.Helpers
                         Text = body
                     }
                 };
-                message.From.Add(new MailboxAddress("BankAccountingApi", smtpOptions.From));
+				message.From.Add(new MailboxAddress("BankAccountingApi", smtpOptions.From));
                 message.To.Add(new MailboxAddress(toName, toAddress));
                 smtpClient.CheckCertificateRevocation = false;
                 smtpClient.ServerCertificateValidationCallback += (sender, cert, chain, errors) => true;

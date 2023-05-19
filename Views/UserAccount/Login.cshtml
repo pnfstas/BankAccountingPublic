@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="~/css/Syte.css" />
     </head>
     <body data-error-messages="@(JsonConvert.SerializeObject(LoginViewModel.GetErrorMessages()))">
-        <form class="account-form login" method="post" asp-route="UserAccount/Login">
+        <form class="account-form login" method="post" asp-route="UserAccount/ProcessLogin">
             <fieldset class="login-type-fieldset">
                 <legend>Login by</legend>
                 <div class="login-type-div">

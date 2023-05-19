@@ -120,19 +120,11 @@ namespace BankAccountingApi.Controllers
                     switch(model.LoginType)
                     {
                     case LoginType.LoginByUserName:
-                        actionResult = RedirectToAction("Login", model);
+                        actionResult = RedirectToAction("Login", new LoginViewModel(model));
                         break;
                     case LoginType.LoginByEmail:
                         await EmailHelper.SendConfirmationLinkMail(HttpContext, model, UserManager);
                         actionResult = RedirectToAction("Register", model);
-                        /*
-                        model.EmailVerificationCode = await UserManager.GenerateTwoFactorTokenAsync(newUser, Startup.Startup.TwoFactorTokenProviderName);
-                        if(!string.IsNullOrWhiteSpace(model.EmailVerificationCode))
-                        {
-                            model.EmailConfirmationState = ConfirmationState.WaitForConfirmation;
-                            actionResult = RedirectToAction("Register", model);
-                        }
-                        */
                         break;
                     case LoginType.LoginByPhoneNumber:
                         await SmsHelper.SendVerificationCode(model);
@@ -166,10 +158,29 @@ namespace BankAccountingApi.Controllers
                 confirmed = isConfirmed
             });
         }
+        /*
+        [HttpGet]
+        public async Task<IActionResult> CompleteConfirmEmail(RegisterViewModel model)
+        {
+            IActionResult actionResult = RedirectToAction("Register", model);
+	        if(!string.IsNullOrWhiteSpace(model?.EmailVerificationCode))
+	        {
+		        BankApiUser user = await UserManager.FindByEmailAsync(model?.Email);
+		        if(user != null && await UserManager.VerifyTwoFactorTokenAsync(user, Startup.Startup.TwoFactorTokenProviderName, model.EmailVerificationCode))
+		        {
+			        model.EmailConfirmationState = ConfirmationState.Complete;
+			        model.Submitted = false;
+                    actionResult = RedirectToAction("Login", new LoginViewModel(model));
+                }
+	        }
+            return actionResult;
+        }
+        */
         [HttpGet]
         public async Task<IActionResult> CompleteConfirmEmail(RegisterViewModel model)
         {
             string action = "Register";
+            string query = (model ?? new RegisterViewModel()).ToQueryString();
             if(!string.IsNullOrWhiteSpace(model?.EmailVerificationCode))
             {
                 BankApiUser user = await UserManager.FindByEmailAsync(model?.Email);
@@ -178,15 +189,13 @@ namespace BankAccountingApi.Controllers
                     model.EmailConfirmationState = ConfirmationState.Complete;
                     model.Submitted = false;
                     action = "Login";
+                    LoginViewModel loginModel = new LoginViewModel(model);
+                    query = loginModel.ToQueryString();
                 }
-            }
-            if(model == null)
-            {
-                model = new RegisterViewModel();
             }
             Dictionary<string, string> parameters = new Dictionary<string, string>()
             {
-                {"url", $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/UserAccount/{action}/?{model.ToQueryString()}" },
+                {"url", $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/UserAccount/{action}/?{query}" },
                 {"target", "BankApi.Register" }
             };
             return PartialView("RedirectPartial", parameters);
@@ -202,16 +211,15 @@ namespace BankAccountingApi.Controllers
         {
             model.PhoneConfirmationState = ConfirmationState.Complete;
             BankApiUser user = UserManager.FindByPhoneNumber(model.PhoneNumber);
-            return RedirectToAction("Login", user);
+            return RedirectToAction("Login", new LoginViewModel(model));
         }
         [HttpGet]
-        public IActionResult Login(RegisterViewModel? regModel = null)
+        public IActionResult Login(LoginViewModel? model = null)
         {
-            LoginViewModel model = new LoginViewModel(regModel);
-            return View(model);
+            return View(model ?? new LoginViewModel());
         }
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+		[HttpPost]
+        public async Task<IActionResult> ProcessLogin(LoginViewModel model)
         {
             IActionResult actionResult = View(model);
             if(ModelState.IsValid)
